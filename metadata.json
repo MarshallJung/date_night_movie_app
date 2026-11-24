@@ -1,0 +1,6 @@
+{
+  "name": "The Parlor Dispatch",
+  "description": "Disguise any Friday-night action thriller as a sweeping Jane Austen period romance through a secret setup studio, covert stateless link, Regency mood quiz, bespoke faux poster, and Mercy Veto escape hatch.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

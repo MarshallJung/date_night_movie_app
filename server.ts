@@ -2,6 +2,7 @@ import 'dotenv/config';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import {
   QUIZ_QUESTIONS,
@@ -447,12 +448,11 @@ async function createApp() {
     }
   });
 
-  const rootDir = process.cwd();
+  const rootDir = path.dirname(fileURLToPath(import.meta.url));
   const distDir = path.resolve(rootDir, 'dist');
-  const hasDistBuild = fs.existsSync(path.join(distDir, 'index.html'));
-  const isDevMode =
-    process.env.APP_MODE === 'dev' ||
-    (process.env.NODE_ENV !== 'production' && !hasDistBuild);
+  const indexPath = path.join(distDir, 'index.html');
+  const hasDistBuild = fs.existsSync(indexPath);
+  const isDevMode = process.env.APP_MODE === 'dev';
 
   if (isDevMode) {
     const { createServer: createViteServer } = await import('vite');
@@ -462,22 +462,34 @@ async function createApp() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(distDir));
-    app.get('*', (_req, res) => {
-      const indexPath = path.join(distDir, 'index.html');
+    if (hasDistBuild) {
+      app.use(express.static(distDir));
+    } else {
+      console.warn(
+        `Warning: production build not found at ${indexPath}. Ensure "npm run build" ran during deployment.`,
+      );
+    }
+    app.use((_req, res) => {
       if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
       } else {
-        res.status(404).send('Build output not found.');
+        res
+          .status(503)
+          .send('Application build output not found. Please run "npm run build".');
       }
     });
   }
 
   const port = Number(process.env.PORT) || 3000;
-  app.listen(port, '0.0.0.0', () => {
+  const server = app.listen(port, '0.0.0.0', () => {
     console.log(
-      `The Parlor Dispatch listening on http://0.0.0.0:${port} (${isDevMode ? 'dev' : 'production'})`,
+      `The Parlor Dispatch listening on http://0.0.0.0:${port} (mode=${isDevMode ? 'dev' : 'production'}, hasDist=${hasDistBuild})`,
     );
+  });
+
+  server.on('error', (err) => {
+    console.error('HTTP server failed to bind port:', err);
+    process.exit(1);
   });
 }
 

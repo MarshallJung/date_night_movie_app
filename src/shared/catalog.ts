@@ -3,7 +3,7 @@ import type {
   MovieDossier,
   QuizQuestion,
   StreamingServiceOption,
-} from './types';
+} from './types.ts';
 
 export const HERO_EDITORIAL_IMAGE =
   '/src/assets/images/hero_parlor_editorial_1795547743417.jpg';

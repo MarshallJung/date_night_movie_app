@@ -1,9 +1,9 @@
-import { CURATED_PERIOD_ROMANCES, STREAMING_SERVICES } from './catalog';
+import { CURATED_PERIOD_ROMANCES, STREAMING_SERVICES } from './catalog.ts';
 import type {
   MercyVetoMovie,
   QuizAnswers,
   StreamingServiceId,
-} from './types';
+} from './types.ts';
 
 const VALID_SERVICE_IDS = new Set<string>(STREAMING_SERVICES.map((s) => s.id));
 

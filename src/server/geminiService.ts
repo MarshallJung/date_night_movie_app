@@ -1,10 +1,10 @@
 import { GoogleGenAI, ThinkingLevel, Type } from '@google/genai';
-import { QUIZ_QUESTIONS } from '../shared/catalog';
+import { QUIZ_QUESTIONS } from '../shared/catalog.ts';
 import {
   extractJsonObject,
   isSafeHttpUrl,
   serviceIdsToNames,
-} from '../shared/validation';
+} from '../shared/validation.ts';
 import type {
   DramatisPersonaeItem,
   GroundingSource,
@@ -14,7 +14,7 @@ import type {
   QuizAnswers,
   StreamingServiceId,
   TropeTranslation,
-} from '../shared/types';
+} from '../shared/types.ts';
 
 function getClient(): GoogleGenAI {
   const apiKey = process.env.GEMINI_API_KEY;

@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import zlib from 'node:zlib';
-import type { InvitationPayload } from '../shared/types';
+import type { InvitationPayload } from '../shared/types.ts';
 
 const EPHEMERAL_FALLBACK_KEY = crypto.randomBytes(32);
 const IV_LENGTH = 12;

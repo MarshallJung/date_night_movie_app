@@ -8,7 +8,7 @@ import {
   QUIZ_QUESTIONS,
   STARTER_MOVIES,
   STREAMING_SERVICES,
-} from './src/shared/catalog';
+} from './src/shared/catalog.ts';
 import {
   isSafeHttpUrl,
   matchPeriodRomancesForServices,
@@ -16,17 +16,17 @@ import {
   sanitizeSalutation,
   validateMovieQuery,
   validateQuizAnswers,
-} from './src/shared/validation';
+} from './src/shared/validation.ts';
 import {
   decodeInvitationToken,
   encodeInvitationToken,
-} from './src/server/tokenCodec';
+} from './src/server/tokenCodec.ts';
 import {
   fetchMercyVetoRomances,
   generateRegencyPitch,
   generateRegencyPoster,
   lookupMovieWithGrounding,
-} from './src/server/geminiService';
+} from './src/server/geminiService.ts';
 import type {
   DisguisedPitchResponse,
   InvitationMeta,
@@ -34,7 +34,7 @@ import type {
   MovieDossier,
   RevealResponse,
   TropeTranslation,
-} from './src/shared/types';
+} from './src/shared/types.ts';
 
 interface StoredRevealBundle {
   disguisedTitle: string;
